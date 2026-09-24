@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Black Diamond Lounge Menu"
+description = "A polished QR-accessed digital menu for Black Diamond Lounge, with browsable Kitchen and Lounge menus and clear in-person ordering guidance. No online ordering or payments."
+version = "1.0.0"
+id = "artifacts/black-diamond-menu"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 23298
+
+[services.development]
+run = "pnpm --filter @workspace/black-diamond-menu run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/black-diamond-menu", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/black-diamond-menu/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "23298"
+BASE_PATH = "/"
